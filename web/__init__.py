@@ -12,7 +12,5 @@ migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 
-
-
 from web import routes #web name is optional (folder name)
 

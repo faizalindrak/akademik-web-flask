@@ -1,0 +1,21 @@
+flask-sqlalchemy
+flask-migrate
+flask-bcrypt
+flask-login
+Pillow
+flask-wtf
+email-validator
+
+
+
+sudo locale-gen ru_RU
+sudo locale-gen ru_RU.UTF-8
+sudo update-locale 
+
+import locale
+locale.getlocale()
+>>> (None, None)
+locale.setlocale(locale.LC_ALL, 'en_US.utf8')
+>>> 'en_US.utf8'
+locale.getlocale()
+>>> ('en_US', 'UTF-8')
