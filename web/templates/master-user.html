@@ -5,26 +5,26 @@
 {% block content %} 
 <div class="mt-5"></div>
 <div class="box div-bg">
-    <h1 class="title is-4 has-text-white">Master Data Mata Kuliah</h1>
+    <h1 class="title is-4 has-text-white">Master User</h1>
 </div>
 <div class="box">
     <table class="table" id="myTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th></th>
-                <th>Kur</th>
-                <th>Kode MK</th>
-                <th>Nama MK</th>
+                <th>User Id</th>
+                <th>Username</th>
+                <th>Email</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            {% for mk in data_mk %}
+            {% for u in data_user %}
                 <tr>
                     <td></td>
-                    <td>{{mk.kurikulum}}</td>
-                    <td>{{mk.kode_mk}}</td>
-                    <td>{{mk.nama_mk}}</td>
+                    <td>{{u.id}}</td>
+                    <td>{{u.username}}</td>
+                    <td>{{u.email}}</td>
                     <td class="has-text-centered">
                         <a href="{{url_for('masterdosen')}}" class="tag is-warning"><i class="fa fa-pen"></i></a>
                         <a href="{{url_for('masterdosen')}}" class="tag is-danger"><i class="fa fa-trash"></i></a>

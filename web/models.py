@@ -15,6 +15,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.png')
     password = db.Column(db.String(60), nullable=False)
+    user_level = db.Column(db.Integer, default=1)
+    is_active = db.Column(db.Boolean, default=False)
     angkatan = db.Column(db.String(4))
     kurikulum = db.Column(db.String(10))
     posts = db.relationship('Post', backref='author', lazy=True)
@@ -36,6 +38,10 @@ class Profile(db.Model):
     agama = db.Column(db.String(20))
     no_hp = db.Column(db.String(20))
     alamat = db.Column(db.String(200))
+    def __repr__(self):
+        return f"User('{self.profile_id}', '{self.nama_depan}', '{self.kelas}')"
+    def get_ulevel(self):
+        return self.ulevel
     
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -9,9 +9,22 @@ from flask_login import login_user, current_user, logout_user, login_required
 from web import login_manager
 from sqlalchemy import desc
 import datetime
+from functools import wraps
 
+
+
+def admin_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if current_user.user_level == 3:
+            return f(*args, **kwargs)
+        else:
+            flash("You need to be an admin to view this page.")
+            return redirect(url_for('home'))
+    return wrap
 
 ### HOME PAGE ####
+
 @app.route('/home')
 @login_required
 def home():
@@ -21,7 +34,6 @@ def home():
 @login_required
 def index():
     return redirect(url_for('home'))
-
 
 ### REGISTER ROUTE ###
 @app.route('/register', methods=['GET', 'POST'])
@@ -111,22 +123,25 @@ def account_update():
     return render_template('account-update.html', form=form)
 
 @app.route('/admin/master/dosen')
+@admin_required
 @login_required
 def masterdosen():
     data_dosen = Dosen.query.join(makul_dosen).join(Makul).all()
     return render_template('master-dosen.html', title='Admin - Master Data Dosen', data_dosen=data_dosen)
 
 @app.route('/admin/master/makul')
+@admin_required
 @login_required
 def mastermakul():
-    data_mk = Makul.query.all()
+    data_mk = Makul.query.order_by(desc(Makul.nama_mk)).all()
     return render_template('master-makul.html', title='Admin - Master Data Mata Kuliah', data_mk=data_mk)
 
-@app.route('/admin/master/makul_dosen')
+@app.route('/admin/master/user')
+@admin_required
 @login_required
-def mastermakuldosen():
-    data_dosen = Dosen.query.join(makul_dosen).join(Makul).all()
-    return render_template('master-dosen.html', title='Admin - Master Data Rel Dosen dan Mata Kuliah', data_dosen=data_dosen)      
+def masteruser():
+    data_user = User.query.all()
+    return render_template('master-user.html', title='Admin - Master Data User', data_user=data_user)      
 
 @app.route('/jadwalkuliah')
 @login_required

@@ -8,10 +8,10 @@
     <h1 class="title is-4 has-text-white">Master Data Dosen</h1>
 </div>
 <div class="box">
-    <table class="table" id="dataTable" width="100%" cellspacing="0">
+    <table class="table" id="dataDosen" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th>No</th>
+                <th></th>
                 <th>Nama Dosen</th>
                 <th>Action</th>
             </tr>
@@ -19,11 +19,11 @@
         <tbody>
             {% for dosen in data_dosen %}
                 <tr>
-                    <td class="has-text-centered">{{loop.index}}</td>
+                    <td></td>
                     <td>{{dosen.nama_dosen}}</td>
                     <td class="has-text-centered">
-                        <a href="{{url_for('masterdosen')}}" class="button is-small is-warning is-rounded"><i class="fa fa-pen"></i></a>
-                        <a href="{{url_for('masterdosen')}}" class="button is-small is-danger is-rounded"><i class="fa fa-trash"></i></a>
+                        <a href="{{url_for('masterdosen')}}" class="tag is-warning"><i class="fa fa-pen"></i></a>
+                        <a href="{{url_for('masterdosen')}}" class="tag is-small is-danger"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
             {% endfor %}
