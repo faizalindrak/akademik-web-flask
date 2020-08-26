@@ -1,0 +1,103 @@
+{% extends "account-layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="box mt-4 mb-0">
+    
+    <p class="title is-4 has-text-centered  ">Perbarui Akun</p>
+    <form method="POST" action="" enctype="multipart/form-data">
+
+        {{ form.hidden_tag() }}
+        
+
+        <div class="field">
+            {{ form.username.label(class="label") }}
+            <p class="control has-icons-left">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                {% if form.username.errors %}
+                    {{ form.username(class="input is-danger") }}
+                    <div class="help is-danger">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.username(class="input") }}
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="field">
+            {{ form.email.label(class="label") }}
+            <p class="control has-icons-left">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-envelope-square"></i>
+                </span>
+                {% if form.email.errors %}
+                    {{ form.email(class="input is-danger") }}
+                        <div class="help is-danger">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ form.email(class="input") }}
+                {% endif %}
+            </p>
+        </div>
+        <div class="field">
+            {{ form.picture.label(class="label") }}
+                {% if form.picture.errors %}
+                <div class="file has-name is-fullwidth">
+                    <label class="file-label">
+                        {{ form.picture(class="file-input") }}
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                          Choose a file…
+                        </span>
+                      </span>
+                      <span class="file-name">
+                        {{current_user.image_file}}
+                      </span>
+                    </label>
+                  </div>
+                <div class="help is-danger">
+                    {% for error in form.picture.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    <div class="file has-name is-fullwidth">
+                        <label class="file-label">
+                            {{ form.picture(class="file-input") }}
+                          <span class="file-cta">
+                            <span class="file-icon">
+                              <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label">
+                              Choose a file…
+                            </span>
+                          </span>
+                          <span class="file-name">
+                            {{current_user.image_file}}
+                          </span>
+                        </label>
+                      </div>
+                {% endif %}
+        </div>
+                {{ form.prevpic }}
+        <div class="control">
+            <div class="mb-4"></div>
+            {{ form.submit(class="button is-success is-rounded is-fullwidth")}}
+            <div class="mt-2 mb-2 has-text-centered">
+              <a href="{{ url_for('account') }}" class="button is-danger is-rounded is-light"><span class="icon is-small"><i class="fas fa-chevron-left"></i></span><span>Kembali</span></a>
+          </div>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

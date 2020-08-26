@@ -1,0 +1,71 @@
+{% extends "blog-layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="mt-5"?></div>
+<div class="box box-custom">
+    <h1 class="title is-4 has-text-white"><a href="{{url_for('blog')}}" class="has-text-white">Blog</a> / Post by {{current_user.username}}</h1>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<div class="mt-4 mb-4">
+  <div class="box">
+    <table class="table is-fullwidth">
+      <thead>
+        <tr>
+          <th class="has-text-centered">No</th>
+          <th>Judul Post</th>
+          <th class="has-text-centered">Tanggal Post</th>
+          
+          <th class="has-text-centered">Aksi</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th class="has-text-centered">No</th>
+          <th>Judul Post</th>
+          <th class="has-text-centered">Tanggal Post</th>
+          
+          <th class="has-text-centered">Aksi</th>
+        </tr> 
+      </tfoot>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td class="has-text-centered">{{loop.index}}</td>
+          <td>{{post.title}}</td>
+          <td class="has-text-centered">{{post.date_posted.strftime('%d/%m/%y')}}</td>
+          
+          <td class="has-text-centered">
+            <a href="{{url_for('updatepost', post_id=post.id)}}" class="button is-small is-warning is-rounded"><i class="fa fa-pen"></i></a>
+            <a href="{{url_for('deletepost', post_id=post.id)}}" class="button is-small is-danger is-rounded"><i class="fa fa-trash"></i></a>
+          </td>
+        </tr>
+          
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="mt-4"></div>
+<aside class="box menu is-hidden-mobile">
+    <div class="mt-2 mb-2 has-text-centered">
+        <a href="{{ url_for('blognewpost') }}" class="button is-success is-rounded is-light"><span class="icon is-small"><i class="fas fa-plus-circle"></i></span><span>Buat Baru</span></a>
+    </div>
+    <div class="mt-2 mb-2 has-text-centered">
+      <a href="{{ url_for('blog') }}" class="button is-danger is-rounded is-light"><span class="icon is-small"><i class="fas fa-chevron-left"></i></span><span>Kembali</span></a>
+  </div>
+  </aside>
+{% endblock %}

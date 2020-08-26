@@ -1,0 +1,100 @@
+{% extends "home-layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %} 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<h1>{{message}} {{category}}</h1>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<!-- #######CONTENT####### -->
+<div class="mt-5"></div>
+<div class="box div-bg">
+    <h1 class="title is-4 has-text-white">Jadwal Kuliah</h1>
+</div>
+<div class="box">
+  <div class="buttons">
+    <a href="" class="button is-rounded" style="width:150px"><span class="icon is-small"><i class="fa fa-calendar-day"></i></span><span>Hari</span></a>
+    <a href="" class="button is-rounded" style="width:150px"><span class="icon is-small"><i class="fa fa-calendar-day"></i></span><span>Mata Kuliah</span></a>
+    <a href="" class="button is-rounded"><span>Senin</span></a>
+    <a href="" class="button is-rounded"><span>Selasa</span></a>
+    <a href="" class="button is-rounded"><span>Rabu</span></a>
+    <a href="" class="button is-rounded"><span>Kamis</span></a>
+    <a href="" class="button is-rounded"><span>Jum'at</span></a>
+    <a href="" class="button is-rounded"><span>Sabtu</span></a>
+  </div>
+</div>
+<div class="box">
+    <div class="history-tl-container">
+        <ul class="tl">
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              Senin<br> 7:00 PM
+            </div>
+            <div class="item-title">Analisis Perancangan Kerja</div>
+            <div class="item-detail">Ruang A404 <a href="https://google.com">google</a> <br> google</div>
+          </li>
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              19th March 2015<br> 3:00 PM
+            </div>
+            <div class="item-title">Kill some Orcs</div>
+            <div class="item-detail">Don't enter the caves!!</div>
+          </li>
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              1st June 2015<br> 7:00 PM
+            </div>
+            <div class="item-title">Throw that goddamn ring in the lava</div>
+            <div class="item-detail">Also, throw that Gollum too</div>
+          </li>
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              1st June 2015<br> 7:00 PM
+            </div>
+            <div class="item-title">Throw that goddamn ring in the lava</div>
+            <div class="item-detail">Also, throw that Gollum too</div>
+          </li>
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              1st June 2015<br> 7:00 PM
+            </div>
+            <div class="item-title">Throw that goddamn ring in the lava</div>
+            <div class="item-detail">Also, throw that Gollum too</div>
+          </li>
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              1st June 2015<br> 7:00 PM
+            </div>
+            <div class="item-title">Throw that goddamn ring in the lava</div>
+            <div class="item-detail">Also, throw that Gollum too</div>
+          </li>
+          <li class="tl-item" ng-repeat="item in retailer_history">
+            <div class="timestamp">
+              1st June 2015<br> 7:00 PM
+            </div>
+            <div class="item-title">Throw that goddamn ring in the lava</div>
+            <div class="item-detail">Also, throw that Gollum too</div>
+          </li>
+      
+        </ul>
+      
+      </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+<div class="box mt-5">
+  <div class="mt-2 mb-2 has-text-centered">
+    <a href="{{ url_for('tambahjadwal') }}" class="button is-success is-rounded is-light is-fullwidth"><span class="icon is-small"><i class="fas fa-plus-circle"></i></span><span>Tambah Jadwal</span></a>
+</div>
+<div class="mt-2 mb-2 has-text-centered">
+    <a href="{{ url_for('tambahjadwal') }}" class="button is-warning is-rounded is-light is-fullwidth"><span class="icon is-small"><i class="fas fa-list"></i></span><span>Ubah Jadwal</span></a>
+</div>
+</div>
+{% endblock %}

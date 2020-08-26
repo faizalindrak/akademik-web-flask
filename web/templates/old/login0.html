@@ -1,0 +1,83 @@
+{% extends "landing-layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+
+    <div class="container is-widescreen">
+    
+        <div class="tile is-ancestor">
+            <div class="tile is-7 is-vertical is-parent">
+            </div>
+            <div class="tile is-parent">
+              <div class="tile is-child box">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="notification is-{{ category }}">
+                        {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+                <p class="title">Login Form</p>
+                <form method="POST" action="">
+
+                    {{ form.hidden_tag() }}
+                    
+
+
+                    <div class="field">
+                        {{ form.email.label(class="label") }}
+                        <p class="control has-icons-left">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope-square"></i>
+                            </span>
+                            {% if form.email.errors %}
+                                {{ form.email(class="input is-danger") }}
+                                    <div class="help is-danger">
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.email(class="input") }}
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        {{ form.password.label(class="label") }}
+                        <p class="control has-icons-left">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-unlock"></i>
+                            </span>
+                            {% if form.password.errors %}
+                                {{ form.password(class="input is-danger") }}
+                                    <p class="help is-danger">
+                                        {% for error in form.password.errors %}
+                                           {{ error }}
+                                        {% endfor %}
+                                    </p> 
+                            {% else %}
+                                {{ form.password(class="input") }}
+                            {% endif %}
+                        </p>
+                    </div>
+                        
+                        {{ form.remember(class="checkbox") }}
+                        {{ form.remember.label(class="checkbox") }}
+                        <br><br>
+                    <div class="control">
+                        {{ form.submit(class="button is-primary is-fullwidth")}}
+                    </div>
+                </form>
+
+                <div class="mt-2"></div>
+                <p class="has-text-grey-darker has-text-centered">Belum punya akun? <a href="{{ url_for('register') }}" >Daftar</a></p>
+
+              </div>
+            </div>
+          </div>
+
+
+    </div> <!--Container-->
+{% endblock %}

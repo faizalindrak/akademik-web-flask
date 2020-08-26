@@ -1,0 +1,75 @@
+{% extends "blog-layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="mt-5"></div>
+<div class="box box-custom">
+    <h1 class="title is-4 has-text-white">Blog / All Posts</h1>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+<div class="mt-4 mb-4">
+    {% for post in posts %}
+    <div class="box">
+        <h1 class="title is-5" style="line-height: 0.1rem;"> {{ post.title  }}</h1>
+        <div class="field is-grouped is-grouped-multiline">
+            <div class="control">
+              <div class="tags has-addons">
+                <span class="tag is-dark">Oleh</span><span class="tag is-info">{{ post.author.username }}</span>
+              </div>
+            </div>
+            <div class="control">
+              <div class="tags has-addons">
+                <span class="tag is-dark">pada</span><span class="tag is-success">{{ post.date_posted.strftime('%d %B %Y')}}</span>
+              </div>
+            </div>
+        </div>
+        <div class="wyiswyg">
+          <p>
+            {{post.content}}
+          </p>
+        </div>
+        <div class="mt-2 has-text-right div-detail">
+            <a href="{{ url_for('blogdetail', post_id=post.id) }}" class="button is-primary is-small is-rounded is-light"><span>Selangkapnya</span><span class="icon is-small"><i class="fas fa-chevron-right"></i></span></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="mt-4"></div>
+<aside class="box menu is-hidden-mobile">
+    <p class="menu-label">
+      Kategori
+    </p>
+    <ul class="menu-list">
+      <li><a  href="{{ url_for('jadwalkuliah') }}" class=""><i class="fa fa-bullhorn"> </i> Pengumuman</a></li>
+      <li><a href="{{ url_for('tugas') }}"><i class="fa fa-atom"></i> Pengetahuan</a></li>
+      <li><a  href="{{ url_for('daring') }}"><i class="fa fa-puzzle-piece"></i> Ekstra</a></li>
+      <li><a  href="{{ url_for('materi') }}"> <i class="fa fa-info-circle"></i> Lainnya</a></li>
+    </ul>
+    {% if current_user.is_authenticated %}
+    <hr>
+    <div class="mt-2 mb-2 has-text-centered">
+        <a href="{{ url_for('blognewpost') }}" class="button is-success is-rounded is-light"><span class="icon is-small"><i class="fas fa-plus-circle"></i></span><span>Buat Postingan Baru</span></a>
+    </div>
+    <div class="mt-2 mb-2 has-text-centered">
+        <a href="{{ url_for('mypost') }}" class="button is-info is-rounded is-light"><span class="icon is-small"><i class="fas fa-list"></i></span><span>Daftar Postingan Saya</span></a>
+    </div>
+    {% else %}
+
+    {% endif %}
+  </aside>
+{% endblock %}

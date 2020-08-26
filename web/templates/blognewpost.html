@@ -1,0 +1,74 @@
+{% extends "blog-layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="mt-5"></div>
+<div class="box box-newpost">
+    <h1 class="title is-4 has-text-white"><a href="{{url_for('blog')}}" class="has-text-white">Blog</a> / Create New Post</h1>
+</div>
+<div class="mt-4 mb-4">
+    <div class="box">
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="field">
+          {{ form.title.label(class="label") }}
+              {% if form.title.errors %}
+                  {{ form.title(class="input is-danger") }}
+                  <div class="help is-danger">
+                      {% for error in form.title.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.title(class="input") }}
+              {% endif %}
+        </div>
+        <div class="field">
+          {{ form.category.label(class="label") }}
+          <div class="select">
+              {% if form.category.errors %}
+                  {{ form.category() }}
+                  <div class="help is-danger">
+                      {% for error in form.category.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.category() }}
+              {% endif %}
+          </div>
+        </div>
+        <div class="field">
+          {{ form.content.label(class="label") }}
+              {% if form.content.errors %}
+                  {{ form.content(class="textarea is-danger", rows="10") }}
+                  <div class="help is-danger">
+                      {% for error in form.content.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.content(class="textarea", rows="10") }}
+              {% endif %}
+        </div>
+        <div class="has-text-centered">
+          {{form.submit(class="button is-primary is-fullwidth")}}
+        </div>
+
+      </form>
+    </div> <!--BOX-->
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="mt-4"></div>
+<aside class="box menu is-hidden-mobile">
+  <div class="mt-2 mb-2 has-text-left">
+    <a href="{{ url_for('blog') }}" class="button is-danger is-rounded is-light"><span class="icon is-small"><i class="fas fa-chevron-left"></i></span><span>Kembali</span></a>
+</div>
+<div class="mt-2 mb-2 has-text-left">
+    <a href="{{ url_for('mypost') }}" class="button is-info is-rounded is-light"><span class="icon is-small"><i class="fas fa-list"></i></span><span>Daftar Postingan Saya</span></a>
+</div> 
+  </aside>
+{% endblock %}

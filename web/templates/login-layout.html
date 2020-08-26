@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyles.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://kit.fontawesome.com/53bef32d1b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="is-fullwidth">
+        <section class="hero is-primary is-fullheight">
+          <div class="hero-body">
+            <div class="container">
+              <div class="columns is-vcentered">
+                <div class="column is-two-thirds">
+                    <div class="container">
+                        <div class="has-text-centered">
+                            <p class="title is-1 mb-4">
+                                <i class="fab fa-studiovinari"></i>
+                              </p>  
+                        </div>
+                        <p class="title has-text-centered is-family-sans-serif">
+                          Akademik Teknik Industri
+                        </p>
+                        <p class="subtitle has-text-centered">
+                          Universitas Buana Perjuangan Karawang
+                        </p>
+                      </div>
+                </div>
+                <div class="column">
+                    {% block content %} 
+                        {% endblock %}
+                </div>
+              </div>              
+            </div>
+          </div>
+
+          <div class="hero-foot">
+            <div class="content has-text-centered">
+              <p class="has-text-grey-lighter">
+                Made with <span class="has-text-danger is-size-6">♥</span> by Divisi Akademik - HMTI UBP Karawang &copy; 2020
+              </p>
+            </div>
+          </div>
+        </section>
+    </div>
+   
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

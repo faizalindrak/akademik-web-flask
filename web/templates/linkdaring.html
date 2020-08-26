@@ -1,0 +1,23 @@
+{% extends "home-layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %} 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<h1>{{message}} {{category}}</h1>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<!-- #######CONTENT####### -->
+<div class="mt-5"></div>
+<div class="box div-bg3">
+    <h1 class="title is-4 has-text-white">Link Zoom</h1>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}

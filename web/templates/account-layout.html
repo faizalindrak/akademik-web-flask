@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/accordion.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fa/css/all.min.css') }}">
+    <link href='//fonts.googleapis.com/css?family=Roboto:200,400,600' rel='stylesheet' type='text/css'>
+    <style>
+        .div-bg {
+            background: url("{{url_for('static', filename='cool-background.png')}}")
+        }
+        
+        .div-bg2 {
+            background: url("{{url_for('static', filename='cool-background2.png')}}")
+        }
+        
+        .div-bg3 {
+            background: url("{{url_for('static', filename='cool-background3.png')}}")
+        }
+        
+        .div-bg4 {
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+        }
+    </style>
+</head>
+<body>
+    {% include "navbar.html" %}
+    <div class="container">
+        <div class="columns">
+            <div class="column is-4">
+
+            </div> <!-- first column -->
+            <div class="column is-4">
+                {% block content %}
+
+                {% endblock %}
+            </div>
+            <!--second colum-->
+            <div class="column is-4">
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+
+</html>

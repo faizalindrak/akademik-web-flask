@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/accordion.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fa/css/all.min.css') }}">
+    <link href='//fonts.googleapis.com/css?family=Roboto:200,400,600' rel='stylesheet' type='text/css'>
+    <style>
+        .div-bg {
+            background: url("{{url_for('static', filename='cool-background.png')}}")
+        }
+        
+        .div-bg2 {
+            background: url("{{url_for('static', filename='cool-background2.png')}}")
+        }
+        
+        .div-bg3 {
+            background: url("{{url_for('static', filename='cool-background3.png')}}")
+        }
+        
+        .div-bg4 {
+            background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+        }
+    </style>
+</head>
+
+<body>
+    {% include "navbar.html" %}
+    {% if request.path == '/jadwalkuliah/add' %}
+    {% set first_column = "column is-3" %}
+    {% set second_column = "column is-6" %}
+    {% set third_column = "column is-2" %}
+    {% else %}
+    {% set first_column = "column is-3" %}
+    {% set second_column = "column is-7" %}
+    {% set third_column = "column is-2" %}
+    {% endif %}
+    <div class="container">
+        {% if request.path == '/jadwalkuliah' %}
+        {% set jadwal_isactive = "is-active"%}
+        {% elif request.path == '/tugas' %}
+        {% set tugas_isactive = "is-active"%}
+        {% elif request.path == '/darling' %}
+        {% set daring_isactive = "is-active"%}
+        {% elif request.path == '/materi' %}
+        {% set materi_isactive = "is-active"%}
+        {% else %}
+        {% set materi_isactive = ""%}
+        {% set tugas_isactive = ""%}
+        {% set daring_isactive = ""%}
+        {% set jadwal_isactive = ""%}
+        {% endif %}
+
+        <div class="columns">
+            <div class="{{first_column}}">
+                <aside class="menu box is-hidden-mobile">
+                    <p class="menu-label">
+                        Menu
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="{{ url_for('jadwalkuliah') }}" class="{{jadwal_isactive}}"><i
+                                    class="fa fa-calendar-alt"> </i> Jadwal Kuliah</a></li>
+                        <li><a href="{{ url_for('tugas') }}" class="{{tugas_isactive}}"><i
+                                    class="fa fa-tasks"></i> Daftar Tugas </a></li>
+                        <li><a href="{{ url_for('daring') }}" class="{{daring_isactive}}"><i class="fa fa-globe-asia"></i>
+                                Pertemuan Daring</a></li>
+                        <li><a href="{{ url_for('materi') }}" class="{{materi_isactive}}"> <i
+                                    class="fa fa-book-open"></i> Materi Kuliah</a></li>
+                    </ul>
+                </aside>
+
+                <div class=" is-hidden-tablet">
+                    <p class="mt-2"></p>
+                    <div class="tabs is-centered is-toggle">
+                        <ul>
+                            <li class="{{jadwal_isactive}}"><a href="{{ url_for('jadwalkuliah') }}"> <span
+                                        class="fa icon is-small"><i class="fas fa-calendar"
+                                            aria-hidden="true"></i></span>
+                                    <span>Jadwal</span></a></li>
+                            <li class="{{tugas_isactive}}"><a href="{{ url_for('tugas') }}"> <span
+                                        class="icon is-small"><i class="fa fa-tasks"
+                                            aria-hidden="true"></i></span>
+                                    <span>Tugas</span></a></li>
+                            <li class="{{daring_isactive}}"><a href="{{ url_for('daring') }}"> <span
+                                        class="icon is-small"><i class="fa fa-globe-asia" aria-hidden="true"></i></span>
+                                    <span>Daring</span></a></li>
+                            <li class="{{materi_isactive}}"><a href="{{ url_for('materi') }}"> <span
+                                        class="icon is-small"><i class="fa fa-book-open" aria-hidden="true"></i></span>
+                                    <span>Materi</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="has-text-grey-lighter is-hidden-mobile">
+                    Made with <span class="has-text-danger is-size-6">♥</span> by @faizalindrak &copy; 2020
+                </p>
+            </div> <!-- first column -->
+            <div class="{{second_column}}">
+                <div class="ml-4">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="{{third_column}}">
+                {% block sidebar %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+
+</html>

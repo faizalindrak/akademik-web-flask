@@ -1,0 +1,90 @@
+from dateutil.parser import parse
+from web import db
+db.create_all()
+from web.models import User, Post, Makul, Dosen, Jadwal
+from datetime import datetime
+db.drop_all()
+db.create_all()
+"""
+pw = '123456'
+hashed_pw = bcrypt.generate_password_hash(pw).decode('utf-8')
+user1 = User(username="faizalindrak", email="faizalindrak@gmail.com", password=hashed_pw)
+db.session.add(user1)
+"""
+user = User(username='admin', email='faizalindrak@gmail.com', password='$2b$12$1qEtrmXLNFIg4nO5V1GAdOfEsvCCXjRRuUi.4bzzGGlpaC3kQlzJ.', image_file='20200823_admin_dbaf92ce45585f30.jpg')
+db.session.add(user)
+db.session.commit()
+
+mk1 = Makul(kode_mk="F02160009", kurikulum="K15", jenis_mk="T", nama_mk="Entrepreneurship",sks=2, semester=5)
+mk2 = Makul(kode_mk="TI1160037", kurikulum="K15", jenis_mk="T", nama_mk="Keselamatan dan Kesehatan Kerja", sks=2, semester=5)
+mk3 = Makul(kode_mk="TI1160038", kurikulum="K15", jenis_mk="T", nama_mk="Perancangan dan Pengembangan Produk", sks=3, semester=5)
+mk4 = Makul(kode_mk="TI1160039", kurikulum="K15", jenis_mk="T", nama_mk="Perilaku dan Perancangan Organisasi", sks=2, semester=4)
+mk5 = Makul(kode_mk="TI1160040", kurikulum="K15", jenis_mk="T", nama_mk="Perencanaan dan Pengendalian Produksi", sks=3, semester=5)
+mk6 = Makul(kode_mk="TI1160041", kurikulum="K15", jenis_mk="T&P", nama_mk="Sistem Produksi (*)", sks=3, semester=5)
+mk7 = Makul(kode_mk="TI1160042", kurikulum="K15", jenis_mk="T", nama_mk="Pemodelan Sistem", sks=2, semester=5)
+mk8 = Makul(kode_mk="TI1160043", kurikulum="K15", jenis_mk="T", nama_mk="Sistem Informasi Manajemen", sks=2, semester=5)
+mk9 = Makul(kode_mk="TI1160044", kurikulum="K15", jenis_mk="T", nama_mk="Perencanaan dan Pengendalian Proyek", sks=2, semester=5)
+
+db.session.add(mk1)
+db.session.add(mk2)
+db.session.add(mk3)
+db.session.add(mk4)
+db.session.add(mk5)
+db.session.add(mk6)
+db.session.add(mk7)
+db.session.add(mk8)
+db.session.add(mk9)
+db.session.commit()
+
+dosen1 = Dosen(nama_dosen='Aris Insan Waluya, S.T., M.M.')
+dosen2 = Dosen(nama_dosen='Boyman, S.T., M.T.')
+dosen3 = Dosen(nama_dosen='Afif Hakim, S.T., M.T.')
+dosen4 = Dosen(nama_dosen='Iskandar Zulkarnaen, M.T.')
+dosen5 = Dosen(nama_dosen='Aina Nindiani, M.T.')
+dosen6 = Dosen(nama_dosen='Ade Astuti Widi Rahayu, S.T., M.T.')
+dosen7 = Dosen(nama_dosen='Sevty Auliani, S.T., M.T.')
+dosen8 = Dosen(nama_dosen='Shofa Shofia Hilabi, S.Kom. M.Kom.')
+dosen9 = Dosen(nama_dosen='Rini Siskayanti, S.T., M.T.')
+
+db.session.add(dosen1)
+db.session.add(dosen2)
+db.session.add(dosen3)
+db.session.add(dosen4)
+db.session.add(dosen5)
+db.session.add(dosen6)
+db.session.add(dosen7)
+db.session.add(dosen8)
+db.session.add(dosen9)
+db.session.commit()
+
+dosen1.subjects.append(mk1)
+dosen2.subjects.append(mk2)
+dosen3.subjects.append(mk3)
+dosen4.subjects.append(mk4)
+dosen5.subjects.append(mk5)
+dosen6.subjects.append(mk6)
+dosen7.subjects.append(mk7)
+dosen8.subjects.append(mk8)
+dosen9.subjects.append(mk9)
+db.session.commit()
+
+tanggal = datetime.now()
+s1 = Jadwal(hari=tanggal, kelas="TI18H", ruang="D404", makul_id="F02160009", dosen_id="1")
+s2 = Jadwal(hari=tanggal, kelas="TI18C", ruang="D404", makul_id="F02160009", dosen_id="1")
+s3 = Jadwal(hari=tanggal, kelas="TI18C", ruang="D404", makul_id="TI1160038", dosen_id="1")
+s4 = Jadwal(hari=tanggal, kelas="TI18A", ruang="D403", makul_id="TI1160039", dosen_id="2")
+db.session.add(s1)
+db.session.add(s2)
+db.session.add(s3)
+db.session.add(s4)
+db.session.commit()
+
+jadwal1 = db.session.query(Jadwal).join(Dosen).join(Makul).filter(Makul.semester==4).filter(Dosen.dosen_id==2).all()
+print (jadwal1)
+for x in jadwal1:
+    print (x.hari.strftime('%A %H:%M'),x.kelas,x.ruang, x.lecturer.nama_dosen, x.subject.nama_mk, x.subject.semester, x.subject.sks)
+    
+print (datetime.now())
+
+tanggalsekarang = parse('2020-08-23 17:30')
+print (tanggalsekarang.strftime('%A %H:%M'))

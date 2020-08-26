@@ -1,0 +1,39 @@
+{% extends "account-layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="box mt-4 mb-0">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }} has-text-centered">
+            {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+    <p class="title is-4 has-text-centered  ">Detail Akun</p>
+    <div class="card-image has-text-centered">
+        <figure class="image is-64x64 is-inline-block">
+            <img class="is-rounded" src="{{ image_file }}">
+        </figure>
+    </div>
+
+    <table class="table is-fullwidth table is-hoverable">
+        <tr>
+            <td><strong>username</strong></td>
+            <td>{{ current_user.username }}</td>
+        </tr>
+        <tr>
+            <td><strong>email</strong></td>
+            <td>{{ current_user.email }}</td>
+        </tr>
+        <tr>
+            <td><strong>angkatan</strong></td>
+            <td>{{ current_user.email }}</td>
+        </tr>
+    </table>
+    <a href="{{url_for('account_update')}}"><button class="button is-primary is-light is-fullwidth is-focus"><i class="fa fa-user-edit">  </i> Perbarui Akun Saya</button></a>
+    
+</div>
+
+{% endblock content %}

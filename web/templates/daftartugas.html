@@ -1,0 +1,317 @@
+{% extends "home-layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %} 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<h1>{{message}} {{category}}</h1>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<!-- #######CONTENT####### -->
+<div class="mt-5"></div>
+<div class="box div-bg2">
+    <h1 class="title is-4 has-text-white">Daftar Tugas</h1>
+</div>
+<div class="tile is-ancestor">
+    <div class="tile is-vertical is-12">
+        <div class="tile">
+            <div class="tile is-parent is-vertical">
+                <article class="tile is-child notification is-primary">
+                    <h3 class="title is-4"><strong>APK II</strong></h3>
+                    <h6 class="subtitle is-5">Desain bangku sesuai dengan antropometri</h6>
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-danger">Deadline</span>
+                                <span class="tag is-link is-light"> 27 Agustus 2020</span>
+                            </div>
+                        </div>
+                    
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-warning">Via</span>
+                                <span class="tag is-link is-light">email : lorem@ipsum.com</span>
+                            </div>
+                        </div>
+                    
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-success">Level</span>
+                                <span class="tag is-link is-light">Tugas Besar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p><strong>Detail</strong> : Commodo quis imperdiet massa tincidunt nunc. Ligula ullamcorper malesuada proin libero
+                        nunc consequat. Id semper risus in hendrerit gravida rutrum quisque non tellus. Mauris augue neque gravida in
+                        fermentum et sollicitudin ac. Aliquam eleifend mi in nulla posuere sollicitudin aliquam. Rhoncus urna neque viverra
+                    </p> <div class="mb-2"></div>
+
+
+                    </article>
+                    <article class="tile is-child notification is-warning">
+                        <h3 class="title is-4"><strong>Statistika</strong></h3>
+                        <h6 class="subtitle is-5">Mencari meaan menggunakan spss</h6>
+                        <div class="field is-grouped is-grouped-multiline">
+                            <div class="control">
+                                <div class="tags has-addons">
+                                    <span class="tag is-danger">Deadline</span>
+                                    <span class="tag is-link is-light"> 27 Agustus 2020</span>
+                                </div>
+                            </div>
+                            <div class="control">
+                                <div class="tags has-addons">
+                                    <span class="tag is-dark">Via</span>
+                                    <span class="tag is-link is-light">email : lorem@ipsum.com</span>
+                                </div>
+                            </div>
+                            <div class="control">
+                                <div class="tags has-addons">
+                                    <span class="tag is-success">Level</span>
+                                    <span class="tag is-link is-light">Tugas Besar</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Detail</strong> : Commodo quis imperdiet massa tincidunt nunc. Ligula ullamcorper malesuada proin libero
+                            nunc consequat. Id semper risus in hendrerit gravida rutrum quisque non tellus. Mauris augue neque gravida in
+                            fermentum et sollicitudin ac. Aliquam eleifend mi in nulla posuere sollicitudin aliquam. Rhoncus urna neque
+                            viverra
+                        </p>
+                  </article>
+
+                <article class="tile is-child notification is-info">
+                    <h3 class="title is-4"><strong>Operasional Riset</strong></h3>
+                    <h6 class="subtitle is-5">Simulasi produksi menggunakan Promodel</h6>
+                    <div class="field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-danger">Deadline</span>
+                                <span class="tag is-link is-light"> 27 Agustus 2020</span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">Via</span>
+                                <span class="tag is-link is-light">email : lorem@ipsum.com</span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-success">Level</span>
+                                <span class="tag is-link is-light">Tugas Besar</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p><strong>Detail</strong> : Commodo quis imperdiet massa tincidunt nunc. Ligula ullamcorper malesuada proin libero
+                        nunc consequat. Id semper risus in hendrerit gravida rutrum quisque non tellus. Mauris augue neque gravida in
+                        fermentum et sollicitudin ac. Aliquam eleifend mi in nulla posuere sollicitudin aliquam. Rhoncus urna neque
+                        viverra
+                    </p>
+              </article>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box">
+    <div id="aspect-content">
+        <div class="aspect-tab ">
+          <input id="item-18" type="checkbox" class="aspect-input" name="aspect">
+          <label for="item-18" class="aspect-label"></label>
+          <div class="aspect-content">
+              <div class="aspect-info">
+                  <div class="chart-pie negative over50">
+                      <span class="chart-pie-count">-69</span>
+                      <div>
+                          <div class="first-fill"></div>
+                          <div class="second-fill" style="transform: rotate(249deg)"></div>
+                      </div>
+                  </div>
+                  <span class="aspect-name">Lorem ipsum</span>
+              </div>
+              <div class="aspect-stat">
+                  <div class="all-opinions">
+                      <span class="all-opinions-count">18</span>
+                      <span>opinion</span>
+                  </div>
+                  <div>
+                      <span class="positive-count">4</span>
+                      <span class="neutral-count">1</span>
+                      <span class="negative-count">13</span>
+                  </div>
+              </div>
+          </div>
+          <div class="aspect-tab-content">
+              <div class="sentiment-wrapper">
+                  <div>
+                      <div>
+                          <div class="positive-count opinion-header">
+                              <span>positive</span>
+                              <span>4</span>
+                          </div>
+                          <div>
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <div>
+                          <div class="neutral-count opinion-header">
+                              <span>neutral</span>
+                              <span>1</span>
+                          </div>
+                          <div>
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <div>
+                          <div class="negative-count opinion-header">
+                              <span>negative</span>
+                              <span>13</span>
+                          </div>
+                          <div>
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="aspect-tab ">
+          <input id="item-14" type="checkbox" class="aspect-input" name="aspect">
+          <label for="item-14" class="aspect-label"></label>
+          <div class="aspect-content">
+              <div class="aspect-info">
+                  <div class="chart-pie positive over50">
+                      <span class="chart-pie-count">58</span>
+                      <div>
+                          <div class="first-fill"></div>
+                          <div class="second-fill" style="transform: rotate(209deg)"></div>
+                      </div>
+                  </div>
+                  <span class="aspect-name">Lorem ipsum dolor sit amet</span>
+              </div>
+              <div class="aspect-stat">
+                  <div class="all-opinions">
+                      <span class="all-opinions-count">22</span>
+                      <span>opinion</span>
+                  </div>
+                  <div>
+                      <span class="positive-count">12</span>
+                      <span class="neutral-count">5</span>
+                      <span class="negative-count">5</span>
+                  </div>
+              </div>
+          </div>
+          <div class="aspect-tab-content">
+              <div class="sentiment-wrapper">
+                  <div>
+                      <div>
+                          <div class="positive-count opinion-header">
+                              <span>positive</span>
+                              <span>12</span>
+                          </div>
+                          <div>
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <div>
+                          <div class="neutral-count opinion-header">
+                              <span>neutral</span>
+                              <span>5</span>
+                          </div>
+                          <div>
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <div>
+                          <div class="negative-count opinion-header">
+                              <span>negative</span>
+                              <span>5</span>
+                          </div>
+                          <div>
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="aspect-tab ">
+          <input id="item-2" type="checkbox" class="aspect-input" name="aspect">
+          <label for="item-2" class="aspect-label"></label>
+          <div class="aspect-content">
+              <div class="aspect-info">
+                  <div class="chart-pie positive">
+                      <span class="chart-pie-count">33</span>
+                      <div>
+                          <div class="first-fill"></div>
+                          <div class="second-fill" style="transform: rotate(119deg)"></div>
+                      </div>
+                  </div>
+                  <span class="aspect-name">Lorem</span>
+              </div>
+              <div class="aspect-stat">
+                  <div class="all-opinions">
+                      <span class="all-opinions-count">7</span>
+                      <span>opinion</span>
+                  </div>
+                  <div>
+                      <span class="positive-count">3</span>
+                      <span class="neutral-count">2</span>
+                      <span class="negative-count">2</span>
+                  </div>
+              </div>
+          </div>
+          <div class="aspect-tab-content">
+              <div class="sentiment-wrapper">
+                  <div>
+                      <div>
+                          <div class="positive-count opinion-header">
+                              <span>positive</span>
+                              <span>3</span>
+                          </div>
+                          <div>
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <div>
+                          <div class="neutral-count opinion-header">
+                              <span>neutral</span>
+                              <span>2</span>
+                          </div>
+                          <div>
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <div>
+                          <div class="negative-count opinion-header">
+                              <span>negative</span>
+                              <span>2</span>
+                          </div>
+                          <div>
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id congue dolor. Vivamus eleifend vitae nunc sed tincidunt.</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}

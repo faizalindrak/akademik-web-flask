@@ -1,0 +1,15 @@
+{% extends "home-layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %} 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<h1>{{message}} {{category}}</h1>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+ <h1>{{ current_user.username }}</h1>
+{% endblock %}
