@@ -126,7 +126,7 @@ def account_update():
 @admin_required
 @login_required
 def masterdosen():
-    data_dosen = Dosen.query.join(makul_dosen).join(Makul).all()
+    data_dosen = Dosen.query.all()
     return render_template('master-dosen.html', title='Admin - Master Data Dosen', data_dosen=data_dosen)
 
 @app.route('/admin/master/makul')

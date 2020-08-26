@@ -13,6 +13,7 @@
             <tr>
                 <th></th>
                 <th>Nama Dosen</th>
+                <th>Mata Kuliah</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -21,6 +22,10 @@
                 <tr>
                     <td></td>
                     <td>{{dosen.nama_dosen}}</td>
+                    <td>{% for m in dosen.subjects %}
+                            {{ m.kode_mk}}
+                        {% endfor %}
+                    </td>
                     <td class="has-text-centered">
                         <a href="{{url_for('masterdosen')}}" class="tag is-warning"><i class="fa fa-pen"></i></a>
                         <a href="{{url_for('masterdosen')}}" class="tag is-small is-danger"><i class="fa fa-trash"></i></a>
