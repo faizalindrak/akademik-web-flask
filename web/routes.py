@@ -1,17 +1,16 @@
 import os
 import secrets
+import datetime
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
+from flask_login import login_user, current_user, logout_user, login_required
+from sqlalchemy import desc, asc    
 from web import app, db, bcrypt #web name is optional (folder name)
 from web.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, TambahJadwal #web is package (a folder with __init__.py)
 from web.models import User, Post, Jadwal, Makul, Dosen, Tugas, Materi, makul_dosen #web is package (a folder with __init__.py)
-from flask_login import login_user, current_user, logout_user, login_required
 from web import login_manager
-from sqlalchemy import desc
-import datetime
 from functools import wraps
-
-
+from sqlalchemy import func
 
 def admin_required(f):
     @wraps(f)
@@ -93,16 +92,8 @@ def save_picture(form_picture, form_username):
     i.thumbnail(output_size)
     i.save(picture_path)
     return picture_fn
-#prev_picture = os.path.join(app.root_path, 'static/profile_pics', current_user.image_file)
-#if os.path.exists(prev_picture):
-#os.remove(prev_picture)
 
-def delete_picture(form_prevpic):
-    try:
-        os.remove(os.path.join(app.root_path, 'static/profile_pics',form_prevpic))
-    except :
-        return "ok"
-           
+
 @app.route("/account-update", methods=['GET', 'POST'])
 @login_required
 def account_update():
@@ -114,7 +105,6 @@ def account_update():
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        delete_picture(form.prevpic.data)
         flash('Akun anda berhasil diperbarui','is-success is-light')
         return redirect(url_for('account'))
     elif request.method == 'GET':
@@ -130,23 +120,43 @@ def masterdosen():
     return render_template('master-dosen.html', title='Admin - Master Data Dosen', data_dosen=data_dosen)
 
 @app.route('/admin/master/makul')
-@admin_required
 @login_required
 def mastermakul():
     data_mk = Makul.query.order_by(desc(Makul.nama_mk)).all()
     return render_template('master-makul.html', title='Admin - Master Data Mata Kuliah', data_mk=data_mk)
 
 @app.route('/admin/master/user')
-@admin_required
 @login_required
 def masteruser():
     data_user = User.query.all()
-    return render_template('master-user.html', title='Admin - Master Data User', data_user=data_user)      
+    return render_template('master-user.html', title='Admin - Master Data User', data_user=data_user)
 
 @app.route('/jadwalkuliah')
 @login_required
 def jadwalkuliah():
-    return render_template('jadwalkuliah.html', title="Jadwal Kuliah")
+    jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).order_by(asc(Jadwal.hari)).all()
+    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal)
+
+@app.route('/jadwalkuliah/hari/<int:hari>')
+@login_required
+def jadwalkuliahhari(hari):
+    hari = str(hari)
+    jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).filter(func.strftime('%w',Jadwal.hari)==hari).order_by(asc(Jadwal.hari)).all()
+    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal)
+
+@app.route('/jadwalkuliah/kelas/<kelas>')
+@login_required
+def jadwalkuliahkelas(kelas):
+    kelas = kelas
+    jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).filter(Jadwal.kelas==kelas).order_by(asc(Jadwal.hari)).all()
+    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal)
+
+@app.route('/jadwalkuliah/makul/<mk>')
+@login_required
+def jadwalkuliahmk(mk):
+    mk = mk
+    jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).filter(Makul.kode_mk==mk).order_by(asc(Jadwal.hari)).all()
+    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal)
 
 @app.route('/jadwalkuliah/add')
 @login_required
@@ -178,7 +188,7 @@ def blog():
 def mypost():
     posts = Post.query.filter_by(user_id=current_user.id).order_by(desc(Post.date_posted)).all()
     return render_template('blogpostlist.html', title='My Post', posts=posts)
-    
+
 @app.route('/blog/post/<int:post_id>')
 def blogdetail(post_id):
     post = Post.query.get_or_404(post_id)

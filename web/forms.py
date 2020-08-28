@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, HiddenField, TextAreaField, DateField, SelectField, RadioField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from web.models import User #web is package name (a folder with __init__.py)
 from flask_login import current_user
 from flask_wtf.file import FileField, FileAllowed
+from web.models import User #web is package name (a folder with __init__.py)
 
 
 class RegistrationForm(FlaskForm):
@@ -27,7 +27,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Kata Sandi', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Log Masuk')
-    
+
 class UpdateAccountForm(FlaskForm):
     username = StringField('Nama Pengguna', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -50,7 +50,7 @@ class PostForm(FlaskForm):
     category = SelectField('Kategori',default='lainnya', choices=[('Pengumuman', 'Pengumuman'),('Pengetahuan', 'Pengetahuan'), ('Pengetahuan', 'Ekstra'),('Lainnya','Lainnya')])
     content = TextAreaField('Konten', validators=[DataRequired()])
     submit = SubmitField('Posting')
-    
+
 class UpdatePostForm(FlaskForm):
     title = StringField('Judul Postingan', validators=[DataRequired()])
     content = TextAreaField('Konten', validators=[DataRequired()])

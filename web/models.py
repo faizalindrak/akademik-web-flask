@@ -1,13 +1,12 @@
 from datetime import datetime
 from web import db, login_manager
 from flask_login import UserMixin
-import locale 
+import locale
 locale.setlocale(locale.LC_ALL, 'id_ID')
-
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.filter_by(id=user_id).first()
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,9 +14,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.png')
     password = db.Column(db.String(60), nullable=False)
-    user_level = db.Column(db.Integer, default=1)
-    is_active = db.Column(db.Boolean, default=False)
     angkatan = db.Column(db.String(4))
+    smstr = db.Column(db.Integer)
+    user_level = db.Column(db.Integer, default=1)
     kurikulum = db.Column(db.String(10))
     posts = db.relationship('Post', backref='author', lazy=True)
     profiles = db.relationship('Profile', backref='user', lazy=True, uselist=False)
@@ -40,8 +39,6 @@ class Profile(db.Model):
     alamat = db.Column(db.String(200))
     def __repr__(self):
         return f"User('{self.profile_id}', '{self.nama_depan}', '{self.kelas}')"
-    def get_ulevel(self):
-        return self.ulevel
     
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -84,11 +81,12 @@ class Dosen(db.Model):
     
 class Jadwal(db.Model):
     jadwal_id = db.Column(db.Integer, primary_key=True)
+    tahun_ajar = db.Column(db.String(10), nullable=False)
     hari = db.Column(db.DateTime, nullable=False)
     kelas = db.Column(db.String(10), nullable=False)
     ruang = db.Column(db.String(10), nullable=False)
     pertemuan = db.Column(db.Integer)
-    makul_id = db.Column(db.String(20), db.ForeignKey('makul.kode_mk'))
+    makul_id = db.Column(db.Integer, db.ForeignKey('makul.makul_id'))
     dosen_id = db.Column(db.Integer, db.ForeignKey('dosen.dosen_id'))
     def __repr__(self):
         return f"Jadwal('{self.jadwal_id}')"
