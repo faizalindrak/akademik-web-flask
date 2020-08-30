@@ -55,12 +55,12 @@
       Kategori
     </p>
     <ul class="menu-list">
-      <li><a  href="{{ url_for('jadwalkuliah') }}" class=""><i class="fa fa-bullhorn"> </i> Pengumuman</a></li>
-      <li><a href="{{ url_for('tugas') }}"><i class="fa fa-atom"></i> Pengetahuan</a></li>
-      <li><a  href="{{ url_for('daring') }}"><i class="fa fa-puzzle-piece"></i> Ekstra</a></li>
-      <li><a  href="{{ url_for('materi') }}"> <i class="fa fa-info-circle"></i> Lainnya</a></li>
+      <li><a  href="#" class=""><i class="fa fa-bullhorn"> </i> Pengumuman</a></li>
+      <li><a href="#"><i class="fa fa-atom"></i> Pengetahuan</a></li>
+      <li><a  href="#"><i class="fa fa-puzzle-piece"></i> Ekstra</a></li>
+      <li><a  href="#"> <i class="fa fa-info-circle"></i> Lainnya</a></li>
     </ul>
-    {% if current_user.is_authenticated %}
+    {% if current_user.is_authenticated and current_user.user_level >= 2%}
     <hr>
     <div class="mt-2 mb-2 has-text-centered">
         <a href="{{ url_for('blognewpost') }}" class="button is-success is-rounded is-light"><span class="icon is-small"><i class="fas fa-plus-circle"></i></span><span>Buat Postingan Baru</span></a>

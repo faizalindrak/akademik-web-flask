@@ -66,7 +66,8 @@ class Makul(db.Model):
     tugas_makul = db.relationship('Tugas', backref='task', lazy=True)
     materi_makul = db.relationship('Materi', backref='docs', lazy=True)
     def __repr__(self):
-        return f"Makul('{self.kode_mk}', '{self.nama_mk}')"
+        return '{}'.format(self.makul_id)
+
     
 class Dosen(db.Model):
     dosen_id = db.Column(db.Integer, primary_key=True)
@@ -77,7 +78,8 @@ class Dosen(db.Model):
     materi_dosen = db.relationship('Materi', backref='pemateri', lazy=True)
     subjects = db.relationship('Makul', secondary=makul_dosen, backref=db.backref('lecturers'))
     def __repr__(self):
-        return f"Dosen('{self.dosen_id}', '{self.nama_dosen}'')"
+        return '{}'.format(self.dosen_id)
+
     
 class Jadwal(db.Model):
     jadwal_id = db.Column(db.Integer, primary_key=True)
@@ -116,5 +118,17 @@ class Materi(db.Model):
     dosen_id = db.Column(db.Integer, db.ForeignKey('dosen.dosen_id'))
     def __repr__(self):
         return f"Materi('{self.materi_id}')"
+
+class Kelas(db.Model):
+    kelas_id = db.Column(db.Integer, primary_key=True)
+    nama_kelas = db.Column(db.String(5), nullable=False)
+    semester_active = db.Column(db.Integer, nullable=False)
+    def __repr__(self):
+        return '{}'.format(self.nama_kelas)
+
+class Waktu(db.Model):
+    hari_id = db.Column(db.Integer, primary_key=True)
+    tanggal = db.Column(db.DateTime, nullable=False,)
+    
 
     

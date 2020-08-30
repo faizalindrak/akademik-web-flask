@@ -1,0 +1,146 @@
+{% extends "home-layout.html" %}
+
+{% block ta %}{{ ta }}{% endblock %}
+
+{% block content %} 
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for hari, message in messages %}
+<h1>{{message}} {{hari}}</h1>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<!-- #######CONTENT####### -->
+<div class="mt-5"></div>
+<div class="box div-bg">
+  <h1 class="title is-4 has-text-white"><a href="{{url_for('jadwalkuliah')}}" class="has-text-white">Jadwal Kuliah</a> / <span class="has-text-warning">Tambah</span></h1>
+</div>
+<div class="mt-4 mb-4">
+  <div class="box">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+
+      <div class="field">
+        {{ form.ta.label(class="label") }}
+            {% if form.ta.errors %}
+                {{ form.ta(class="input is-danger") }}
+                <div class="help is-danger">
+                    {% for error in form.ta.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.ta(class="input") }}
+            {% endif %}
+      </div>
+      <div class="field">
+        {{ form.hari.label(class="label") }}
+        <div class="select">
+            {% if form.hari.errors %}
+                {{ form.hari() }}
+                <div class="help is-danger">
+                    {% for error in form.hari.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.hari() }}
+            {% endif %}
+        </div>
+      </div>
+      <div class="field">
+        {{ form.jam.label(class="label") }}
+        <div class="select">
+            {% if form.jam.errors %}
+                {{ form.jam() }}
+                <div class="help is-danger">
+                    {% for error in form.jam.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.jam() }}
+            {% endif %}
+        </div>
+      </div>
+      <div class="field">
+        {{ form.kelas.label(class="label") }}
+        <div class="select">
+            {% if form.kelas.errors %}
+                {{ form.kelas() }}
+                <div class="help is-danger">
+                    {% for error in form.kelas.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.kelas() }}
+            {% endif %}
+        </div>
+      </div>
+      <div class="field">
+        {{ form.ruang.label(class="label") }}
+            {% if form.ruang.errors %}
+                {{ form.ruang(class="input is-danger") }}
+                <div class="help is-danger">
+                    {% for error in form.ruang.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.ruang(class="input") }}
+            {% endif %}
+      </div>
+      <div class="field">
+        {{ form.matakuliah.label(class="label") }}
+        <div class="select">
+            {% if form.matakuliah.errors %}
+                {{ form.matakuliah() }}
+                <div class="help is-danger">
+                    {% for error in form.matakuliah.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.matakuliah() }}
+            {% endif %}
+        </div>
+      </div>
+      <div class="field">
+        {{ form.dosen.label(class="label") }}
+        <div class="select">
+            {% if form.dosen.errors %}
+                {{ form.dosen() }}
+                <div class="help is-danger">
+                    {% for error in form.dosen.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.dosen() }}
+            {% endif %}
+        </div>
+      </div>
+      <div class="has-text-centered">
+        {{form.submit(class="button is-primary is-fullwidth")}}
+      </div>
+
+    </form>
+  </div> <!--BOX-->
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+<div class="box mt-5">
+  <div class="mt-2 mb-2 has-text-centered">
+    <a href="{{ url_for('jadwalkuliah_tambah') }}" class="button is-success is-rounded is-light is-fullwidth"><span class="icon is-small"><i class="fas fa-plus-circle"></i></span><span>Tambah Jadwal</span></a>
+</div>
+<div class="mt-2 mb-2 has-text-centered">
+    <a href="{{ url_for('jadwalkuliah') }}" class="button is-danger is-rounded is-light is-fullwidth"><span class="icon is-small"><i class="fas fa-chevron-left"></i></span><span>Kembali</span></a>
+</div>
+</div>
+
+{% endblock %}

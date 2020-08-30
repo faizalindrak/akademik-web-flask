@@ -67,5 +67,184 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+
+  var $dropdowns = getAll('.dropdown:not(.is-hoverable)');
+
+  if ($dropdowns.length > 0) {
+    $dropdowns.forEach(function ($el) {
+      $el.addEventListener('click', function (event) {
+        event.stopPropagation();
+        $el.classList.toggle('is-active');
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      closeDropdowns();
+    });
+  }
+
+  function closeDropdowns() {
+    $dropdowns.forEach(function ($el) {
+      $el.classList.remove('is-active');
+    });
+  }
+
+  // Close dropdowns if ESC pressed
+  document.addEventListener('keydown', function (event) {
+    var e = event || window.event;
+    if (e.keyCode === 27) {
+      closeDropdowns();
+    }
+  });
+
+  // Functions
+
+  function getAll(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+  }
+
+
+  var $dropdowns = getAll('.dropdown:not(.is-hoverable)');
+
+  if ($dropdowns.length > 0) {
+    $dropdowns.forEach(function ($el) {
+      $el.addEventListener('click', function (event) {
+        event.stopPropagation();
+        $el.classList.toggle('is-active');
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      closeDropdowns();
+    });
+  }
+
+  function closeDropdowns() {
+    $dropdowns.forEach(function ($el) {
+      $el.classList.remove('is-active');
+    });
+  }
+
+  // Close dropdowns if ESC pressed
+  document.addEventListener('keydown', function (event) {
+    var e = event || window.event;
+    if (e.keyCode === 27) {
+      closeDropdowns();
+    }
+  });
+
+  // Functions
+
+  function getAll(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+  }
+
+  var $dropdownb = getAll('#dropdownb:not(.is-hoverable)');
+
+  if ($dropdownb.length > 0) {
+    $dropdownb.forEach(function ($el) {
+      $el.addEventListener('click', function (event) {
+        event.stopPropagation();
+        $el.classList.toggle('is-active');
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      closedropdownb();
+    });
+  }
+
+  function closedropdownb() {
+    $dropdownb.forEach(function ($el) {
+      $el.classList.remove('is-active');
+    });
+  }
+
+  // Close dropdownb if ESC pressed
+  document.addEventListener('keydown', function (event) {
+    var e = event || window.event;
+    if (e.keyCode === 27) {
+      closedropdownb();
+    }
+  });
+
+  // Functions
+
+  function getAll(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+  }
+
+  var $dropdownc = getAll('#dropdownc:not(.is-hoverable)');
+
+  if ($dropdownc.length > 0) {
+    $dropdownc.forEach(function ($el) {
+      $el.addEventListener('click', function (event) {
+        event.stopPropagation();
+        $el.classList.toggle('is-active');
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      closedropdownc();
+    });
+  }
+
+  function closedropdownc() {
+    $dropdownc.forEach(function ($el) {
+      $el.classList.remove('is-active');
+    });
+  }
+
+  // Close dropdownc if ESC pressed
+  document.addEventListener('keydown', function (event) {
+    var e = event || window.event;
+    if (e.keyCode === 27) {
+      closedropdownc();
+    }
+  });
+
+  // Functions
+
+  function getAll(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+  }
+
+  var $dropdowna = getAll('#dropdowna:not(.is-hoverable)');
+
+  if ($dropdowna.length > 0) {
+    $dropdowna.forEach(function ($el) {
+      $el.addEventListener('click', function (event) {
+        event.stopPropagation();
+        $el.classList.toggle('is-active');
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      closedropdowna();
+    });
+  }
+
+  function closedropdowna() {
+    $dropdowna.forEach(function ($el) {
+      $el.classList.remove('is-active');
+    });
+  }
+
+  // Close dropdowna if ESC pressed
+  document.addEventListener('keydown', function (event) {
+    var e = event || window.event;
+    if (e.keyCode === 27) {
+      closedropdowna();
+    }
+  });
+
+  // Functions
+
+  function getAll(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+  }
+
+
+
 });
 

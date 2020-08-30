@@ -1,10 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, HiddenField, TextAreaField, DateField, SelectField, RadioField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms_sqlalchemy.fields import QuerySelectField
 from flask_login import current_user
 from flask_wtf.file import FileField, FileAllowed
-from web.models import User #web is package name (a folder with __init__.py)
-
+from web import app, db
+from web.models import User, Kelas, Makul, Dosen  #web is package name (a folder with __init__.py)
+from sqlalchemy import desc, asc   
 
 class RegistrationForm(FlaskForm):
     username = StringField('Nama Pengguna', validators=[DataRequired(), Length(min=2, max=20)])
@@ -56,14 +58,15 @@ class UpdatePostForm(FlaskForm):
     content = TextAreaField('Konten', validators=[DataRequired()])
     submit = SubmitField('Posting')
 
-class TambahJadwal(FlaskForm):
-    kodeMK = StringField('Kode Mata Kuliah', validators=[DataRequired()])
-    mataKuliah = StringField('Mata Kuliah', validators=[DataRequired()])
-    jumlahSKS = SelectField('Jumlah SKS', choices=[(2,2),(3,3),(4,4),(5,5),(6,6)])
-    semester = SelectField('Semester', choices=[(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8)], validators=[DataRequired()])
-    dosen = StringField('Nama Dosen', validators=[DataRequired()])
-    hari = SelectField('Hari', choices=[('Senin','Senin'),('Selasa','Selasa'),('Rabu','Rabu'),('Kamis','Kamis'),('Jumat','Jumat '),('Sabtu','Sabtu')], validators=[DataRequired()])
-    jam = SelectField('Waktu', choices=[('08.00 - 10.00','08.00 - 10.00'), ('10.00 - 12.00', '10.00 - 12.00'), ('12.00 - 14.00', '12.00 - 14.00'),('16.00 - 18.00', '16.00 - 18.00'), ('18.00 - 20.00', '18.00 - 20.00'), ('20.00 - 22.00', '20.00 - 22.00')], validators=[DataRequired()])
-    kelas = StringField('Kelas', validators=[DataRequired()])
-    ruangan = StringField('Ruangan', validators=[DataRequired()])
-    submit = SubmitField('Tambahkan')   
+def makul_query():
+    return Makul.query
+
+class JadwalForm(FlaskForm):
+    ta = StringField('Tahun Ajar', validators=[DataRequired()])
+    hari = SelectField('Hari', choices=[('2020,8,24', 'Senin'),('2020,8,25','Selasa'),('2020,8,26', 'Rabu'),('2020,8,27','Kamis'),('2020,8,28','Jumat'),('2020,8,29','Sabtu')])
+    jam = SelectField('Jam', choices=[('8,00,00','08:00'),('10,00,00','10:00'),('12,00,00','12:00'),('14,00,00','14:00'),('16,00,00','16:00'),('18,00,00','18:00'),('20,00,00','20:00')])
+    kelas = QuerySelectField(label="Kelas", validators=[DataRequired()], query_factory=lambda: db.session.query(Kelas).filter(Kelas.semester_active==current_user.smstr), get_pk=lambda nama_kelas:nama_kelas, get_label=lambda nama_kelas:nama_kelas, allow_blank=True)
+    ruang = StringField('Ruang', validators=[DataRequired()])
+    matakuliah = QuerySelectField(label="Mata Kuliah", query_factory=makul_query, get_label='nama_mk', allow_blank=True)
+    dosen = QuerySelectField(label="Dosen Pengampu", validators=[DataRequired()], query_factory=lambda: db.session.query(Dosen).order_by(asc(Dosen.nama_dosen)), get_pk=lambda dosen_id:dosen_id, get_label='nama_dosen')
+    submit = SubmitField('Tambah Jadwal')

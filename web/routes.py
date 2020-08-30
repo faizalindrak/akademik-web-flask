@@ -6,16 +6,17 @@ from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import desc, asc    
 from web import app, db, bcrypt #web name is optional (folder name)
-from web.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, TambahJadwal #web is package (a folder with __init__.py)
-from web.models import User, Post, Jadwal, Makul, Dosen, Tugas, Materi, makul_dosen #web is package (a folder with __init__.py)
+from web.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, JadwalForm#web is package (a folder with __init__.py)
+from web.models import User, Post, Jadwal, Makul, Dosen, Tugas, Materi, makul_dosen, Kelas #web is package (a folder with __init__.py)
 from web import login_manager
 from functools import wraps
 from sqlalchemy import func
+from datetime import datetime
 
 def admin_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if current_user.user_level == 3:
+        if current_user.user_level >= 5:
             return f(*args, **kwargs)
         else:
             flash("You need to be an admin to view this page.")
@@ -53,15 +54,15 @@ def register():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if current_user.is_authenticated:
-        redirect(url_for('home'))
+        redirect(url_for('jadwalkuliah_all'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            flash('Berhasil masuk', 'success')
+            flash('Berhasil Masuk!', 'is-success')
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('jadwalkuliah_all'))
         else:
             flash('Email atau Kata Sandi salah!', 'danger')
             return redirect(url_for('login'))
@@ -131,52 +132,84 @@ def masteruser():
     data_user = User.query.all()
     return render_template('master-user.html', title='Admin - Master Data User', data_user=data_user)
 
-@app.route('/jadwalkuliah')
+@app.route('/jadwalkuliah/')
 @login_required
 def jadwalkuliah():
-    jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).order_by(asc(Jadwal.hari)).all()
-    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal)
+    daftarkelas = Kelas.query.filter(Kelas.semester_active==current_user.smstr).all()
+    subjects = Makul.query.filter(Makul.semester==current_user.smstr).order_by(asc(Makul.nama_mk)).all()
+    jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).order_by(asc(Jadwal.hari)).order_by(asc(Makul.nama_mk)).all()
+    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal, subjects=subjects, daftarkelas=daftarkelas)
+
+@app.route('/jadwalkuliah/all')
+@login_required
+def jadwalkuliah_all():
+    daftarkelas = Kelas.query.filter(Kelas.semester_active==current_user.smstr).all()
+    subjects = Makul.query.filter(Makul.semester==current_user.smstr).order_by(asc(Makul.nama_mk)).all()
+    jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).order_by(asc(Jadwal.hari)).order_by(asc(Makul.nama_mk)).all()
+    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal, subjects=subjects, daftarkelas=daftarkelas)
 
 @app.route('/jadwalkuliah/hari/<int:hari>')
 @login_required
 def jadwalkuliahhari(hari):
     hari = str(hari)
+    daftarkelas = Kelas.query.filter(Kelas.semester_active==current_user.smstr).all()
+    subjects = Makul.query.filter(Makul.semester==current_user.smstr).order_by(asc(Makul.nama_mk)).all()
     jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).filter(func.strftime('%w',Jadwal.hari)==hari).order_by(asc(Jadwal.hari)).all()
-    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal)
+    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal, subjects=subjects, daftarkelas=daftarkelas)
 
 @app.route('/jadwalkuliah/kelas/<kelas>')
 @login_required
 def jadwalkuliahkelas(kelas):
     kelas = kelas
+    daftarkelas = Kelas.query.filter(Kelas.semester_active==current_user.smstr).all()
+    subjects = Makul.query.filter(Makul.semester==current_user.smstr).order_by(asc(Makul.nama_mk)).all()
     jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).filter(Jadwal.kelas==kelas).order_by(asc(Jadwal.hari)).all()
-    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal)
+    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal, subjects=subjects, daftarkelas=daftarkelas)
 
 @app.route('/jadwalkuliah/makul/<mk>')
 @login_required
 def jadwalkuliahmk(mk):
     mk = mk
+    daftarkelas = Kelas.query.filter(Kelas.semester_active==current_user.smstr).all()
+    subjects = Makul.query.filter(Makul.semester==current_user.smstr).order_by(asc(Makul.nama_mk)).all()
     jadwal = Jadwal.query.join(Dosen).join(Makul).filter(Makul.semester==current_user.smstr).filter(Makul.kode_mk==mk).order_by(asc(Jadwal.hari)).all()
-    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal)
+    return render_template('jadwalkuliah.html', title="Jadwal Kuliah", jadwal=jadwal, subjects=subjects, daftarkelas=daftarkelas)
 
-@app.route('/jadwalkuliah/add')
+
+@app.route('/jadwalkuliah/tambah', methods=['POST','GET'])
 @login_required
-def tambahjadwal():
-    return render_template('jadwalkuliah.html', title="Jadwal Kuliah")
+def jadwalkuliah_tambah():
+    form = JadwalForm()
+    form.matakuliah.query = Makul.query.filter(Makul.semester==current_user.smstr)
+    if form.validate_on_submit():
+        hari = form.hari.data+','+form.jam.data
+        hari_time = datetime.strptime(hari, '%Y,%m,%d,%H,%M,%S')
+        makul = int(form.matakuliah.data[0])
+        jadwal = Jadwal(tahun_ajar=form.ta.data, hari=datetime.utcnow(), kelas=form.kelas.data, pertemuan=1, ruang=form.ruang.data, makul_id=form.matakuliah.data, dosen_id=form.dosen.data)
+        j1 = Jadwal(tahun_ajar=form.ta.data, hari=hari_time, kelas = "TEST", ruang = form.ruang.data, makul_id =makul, dosen_id = 3)
+        db.session.add(j1)
+        db.session.commit()
+        flash('Jadwal telah ditambahkan', 'is-success is-light')
+        return redirect(url_for('jadwalkuliah'))
+    return render_template('jadwalkuliah-tambah.html', title="Tambah - Jadwal Kuliah", form=form)
+
+
+    
 
 @app.route('/tugas')
 @login_required
 def tugas():
-    return render_template('daftartugas.html', title="Daftar Tugas")
+    return render_template('comingsoon.html', title="Daftar Tugas")
 
 @app.route('/darling')
 @login_required
 def daring():
-    return render_template('linkdaring.html', title="Link Daring (Zoom)")
+    return render_template('comingsoon.html', title="Link Daring (Zoom)")
 
 @app.route('/materi')
 @login_required
 def materi():
-    return render_template('materikuliah.html', title="Daftar Materi Kuliah")
+    return render_template('comingsoon.html', title="Daftar Materi Kuliah")
 
 @app.route('/blog')
 def blog():
@@ -198,7 +231,7 @@ def blogdetail(post_id):
 @login_required
 def blognewpost():
     form = PostForm()
-    date = datetime.datetime.now()
+    date = datetime.now()
     datefm = date.strftime('%Y-%m-%d')
     if form.validate_on_submit():
         post = Post(title=form.title.data, content=form.content.data, author=current_user, category=form.category.data)

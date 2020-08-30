@@ -6,55 +6,148 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, message in messages %}
-<h1>{{message}} {{category}}</h1>
+<div class="notification is-warning is-light">
+  {{message}}
+</div>
 {% endfor %}
 {% endif %}
 {% endwith %}
 
 <!-- #######CONTENT####### -->
-<div class="mt-5"></div>
+<div class="mt-5 is-hidden-mobile"></div>
+{%if request.path == "/jadwalkuliah/"%}
+{%set semua_isactive = "is-link"%}
+{%elif request.endpoint == "jadwalkuliahkelas"%}
+{%set kelas_isactive = "is-link"%}
+{%elif request.endpoint == "jadwalkuliahmk"%}
+{%set mk_isactive = "is-link"%}
+{%elif request.endpoint == "jadwalkuliahhari"%}
+{%set hari_isactive = "is-link"%}
+{%elif request.endpoint == "jadwalkuliah_all"%}
+{%set all_isactive = "is-link"%}
+{%endif%}
 <div class="box div-bg">
     <h1 class="title is-4 has-text-white">Jadwal Kuliah</h1>
 </div>
-<div class="box">
-  <div class="buttons">
-    <a href="" class="button is-rounded" style="width:150px"><span class="icon is-small"><i class="fa fa-calendar-day"></i></span><span>Hari</span></a>
-    <a href="" class="button is-rounded" style="width:150px"><span class="icon is-small"><i class="fa fa-calendar-day"></i></span><span>Mata Kuliah</span></a>
-    <a href="" class="button is-rounded"><span>Senin</span></a>
-    <a href="" class="button is-rounded"><span>Selasa</span></a>
-    <a href="" class="button is-rounded"><span>Rabu</span></a>
-    <a href="" class="button is-rounded"><span>Kamis</span></a>
-    <a href="" class="button is-rounded"><span>Jum'at</span></a>
-    <a href="" class="button is-rounded"><span>Sabtu</span></a>
+<div class="box" style="padding:1rem">
+<div class="buttons is-centered" style="margin-bottom:1rem; margin-top:1rem">
+    <a href="{{url_for('jadwalkuliah')}}" class="button is-rounded {{semua_isactive}}" style="width:140px;"><span class="icon is-small"><i class="fa fa-globe"></i></span><span>Semua</span></a>
+   
+    <div class="dropdown" id="dropdowna">
+      <div class="dropdown-trigger">
+        <button class="button is-rounded {{kelas_isactive}}" aria-haspopup="true" aria-controls="dropdown-menu" style="width:140px;">
+          <span class="icon is-small"><i class="fa fa-users"></i></span>
+          <span>Kelas</span>
+          <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+          {% for dk in daftarkelas %}
+            <a href="{{url_for('jadwalkuliahkelas', kelas=dk.nama_kelas)}}" class="dropdown-item">{{dk.nama_kelas}}</a>
+          {%endfor%}
+        </div>
+      </div>
+    </div>
+   
+    <a href="{{url_for('jadwalkuliah_all')}}" class="button is-rounded {{all_isactive}}"><span class="icon is-small"><i class="fa fa-search"></i></span></a>
+  
+    <div class="dropdown" id="dropdownb">
+    <div class="dropdown-trigger">
+      <button class="button is-rounded {{hari_isactive}}" aria-haspopup="true" aria-controls="dropdown-menu" style="width: 140px;">
+        <span class="icon is-small"><i class="fa fa-calendar"></i></span>
+        <span>Hari</span>
+        <span class="icon is-small">
+          <i class="fas fa-angle-down" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+      <div class="dropdown-content">
+        <a href="{{url_for('jadwalkuliahhari', hari=1)}}" class="dropdown-item">Senin</a>
+        <a href="{{url_for('jadwalkuliahhari', hari=2)}}" class="dropdown-item">Selasa</a>
+        <a href="{{url_for('jadwalkuliahhari', hari=3)}}" class="dropdown-item">Rabu</a>
+        <a href="{{url_for('jadwalkuliahhari', hari=4)}}" class="dropdown-item">Kamis</a>
+        <a href="{{url_for('jadwalkuliahhari', hari=5)}}" class="dropdown-item">Jumat</a>
+        <a href="{{url_for('jadwalkuliahhari', hari=6)}}" class="dropdown-item">Sabtu</a>
+      </div>
+    </div>
   </div>
+
+  <div class="dropdown" id="dropdownc">
+    <div class="dropdown-trigger">
+      <button class="button is-rounded {{mk_isactive}}" aria-haspopup="true" aria-controls="dropdown-menu" style="width: 140px;">
+        <span class="icon is-small"><i class="fa fa-list-ol"></i></span>
+        <span>Mata Kuliah</span>
+        <span class="icon is-small">
+          <i class="fas fa-angle-down" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+      <div class="dropdown-content">
+        {% for i in subjects%}
+           <a href="{{url_for('jadwalkuliahmk', mk=i.kode_mk)}}" class="dropdown-item">{{i.nama_mk}}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+ </div>
+</div> 
+
+{%if request.endpoint == 'jadwalkuliah_all'%}
+<div class="box">
+<table class="table" id="myTable" width="100%" cellspacing="0">
+  <thead>
+      <tr>
+          <th></th>
+          <th>Waktu</th>
+          <th>Nama MK</th>
+          <th>Ruang & Kelas</th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for j in jadwal%}
+      <tr>
+        <td></td>
+        <td> {{ j.hari.strftime('%A') }} <br> {{ j.hari.strftime('%H:%M') }}  </td>
+        <td> <strong>{{ j.subject.nama_mk }}</strong> <br> {{ j.lecturer.nama_dosen }}  </td>
+        <td><span class="fa fa-university has-text-primary"></span> {{j.ruang}} <span class="fa fa-users has-text-primary"></span>  {{j.kelas}}</div></td>
+      </tr>
+    {%endfor%}
+  </tbody>
+</table>
 </div>
+{%else%}
+
 <div class="box">
     <div class="history-tl-container">
         <ul class="tl">
           {%for j in jadwal%}
             <li class="tl-item" ng-repeat="item in retailer_history">
               <div class="timestamp">
-                {{ j.hari.strftime('%A') }}<br> {{ j.hari.strftime('%H:%M') }}
+                 {{ j.hari.strftime('%A') }} <br> <b>{{ j.hari.strftime('%H:%M') }}</b> 
               </div>
-              <div class="item-title"> {{ j.subject.nama_mk }}</div>
+              <div class="item-title">  {{ j.subject.nama_mk }}</div>
               <div class="item-detail">  {{ j.lecturer.nama_dosen }} <br> <span class="fa fa-university has-text-primary"></span> {{j.ruang}} <span class="fa fa-users has-text-primary"></span>  {{j.kelas}}</div>
             </li>
           {%endfor%}
-      
         </ul>
-      
       </div>
 </div>
-
+{%endif%}
 {% endblock %}
 
 {% block sidebar %}
-<div class="box mt-5">
+{% if current_user.user_level >= 2 %}
+<div class="mt-5"></div>
+<div class="box">
   <div class="mt-2 mb-2 has-text-centered">
-    <a href="{{ url_for('tambahjadwal') }}" class="button is-success is-rounded is-light is-fullwidth"><span class="icon is-small"><i class="fas fa-plus-circle"></i></span><span>Tambah Jadwal</span></a>
-</div>
-<div class="mt-2 mb-2 has-text-centered">
-    <a href="{{ url_for('tambahjadwal') }}" class="button is-warning is-rounded is-light is-fullwidth"><span class="icon is-small"><i class="fas fa-list"></i></span><span>Ubah Jadwal</span></a>
+    <a href="{{ url_for('jadwalkuliah_tambah') }}" class="button is-success is-rounded is-fullwidth"><span class="icon is-small"><i class="fas fa-add"></i></span><span>Tambah Jadwal</span></a>
+    <a href="{{ url_for('jadwalkuliah') }}" class="button is-danger is-rounded is-fullwidth"><span class="icon is-small"><i class="fas fa-edit"></i></span><span>Ubah Jadwal</span></a>
 </div>
 </div>
+{%endif%}
 {% endblock %}

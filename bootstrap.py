@@ -1,21 +1,24 @@
 from datetime import datetime
 from dateutil.parser import parse
-from web.models import User, Post, Makul, Dosen, Jadwal
+from web.models import User, Post, Makul, Dosen, Jadwal, Kelas
 from web import db
 
 db.drop_all()
 db.create_all()
 
-user = User(username='admin', email='faizalindrak@gmail.com', password='$2b$12$1qEtrmXLNFIg4nO5V1GAdOfEsvCCXjRRuUi.4bzzGGlpaC3kQlzJ.', image_file='20200823_admin_dbaf92ce45585f30.jpg')
-db.session.add(user)
+user = User(username='admin', email='faizalindrak@gmail.com', password='$2b$12$PTM8CDIpxgLdkRwwHVmjPecqFER9PChlXHasKAVp4n2/InW/evH8a', image_file='20200823_admin_dbaf92ce45585f30.jpg', smstr=5, user_level=5)
+uti18 = User(username='ti18', email='faizalindrak18@gmail.com', password='$2b$12$xy55snotSFtmr6OarDz51uy2LD.OJ9Gt1ypHfZErhTO79a3jeqGBO', image_file='default.png', smstr=5, user_level=1)
+uti19 = User(username='ti19', email='faizalindrak19@gmail.com', password='$2b$12$KPv8NrXN.4T83KZSu/aoderUKrfln2zcxHWe3luHkOml32NRWjlfK', image_file='default.png', smstr=3, user_level=1)
+uti20 = User(username='ti20', email='faizalindrak20@gmail.com', password='$2b$12$JAtWwAGgzeonQqJiL57rRONEWr3hcJ2eqswsBZzym7KMGNdclCNXa', image_file='default.png', smstr=1, user_level=1)
+uti17 = User(username='ti17', email='faizalindrak17@gmail.com', password='$2b$12$GRVrlGYZNSgH6DXCdOc9SuHrqX7m.pmO2x74BTSnyazCT82g87NIm', image_file='default.png', smstr=7, user_level=1)
+db.session.add_all([user, uti18,uti19,uti20,uti17])
 db.session.commit()
-
 
 #TI18
 mk18_1 = Makul(kode_mk="F02160009", kurikulum="TI116", jenis_mk="T", nama_mk="Entrepreneurship",sks=2, semester=5)
 mk18_2 = Makul(kode_mk="TI1160037", kurikulum="TI116", jenis_mk="T", nama_mk="Keselamatan dan Kesehatan Kerja", sks=2, semester=5)
 mk18_3 = Makul(kode_mk="TI1160038", kurikulum="TI116", jenis_mk="T", nama_mk="Perancangan dan Pengembangan Produk", sks=3, semester=5)
-mk18_4 = Makul(kode_mk="TI1160039", kurikulum="TI116", jenis_mk="T", nama_mk="Perilaku dan Perancangan Organisasi", sks=2, semester=4)
+mk18_4 = Makul(kode_mk="TI1160039", kurikulum="TI116", jenis_mk="T", nama_mk="Perilaku dan Perancangan Organisasi", sks=2, semester=5)
 mk18_5 = Makul(kode_mk="TI1160040", kurikulum="TI116", jenis_mk="T", nama_mk="Perencanaan dan Pengendalian Produksi", sks=3, semester=5)
 mk18_6 = Makul(kode_mk="TI1160041", kurikulum="TI116", jenis_mk="T", nama_mk="Sistem Produksi (T)", sks=3, semester=5)
 mk18_61 = Makul(kode_mk="TI1160041P", kurikulum="TI116", jenis_mk="P", nama_mk="Sistem Produksi (P)", sks=3, semester=5)
@@ -514,7 +517,7 @@ jc36 = Jadwal(tahun_ajar="", hari=datetime(2020,8,25,20,00,00), kelas = "TI17F",
 jc37 = Jadwal(tahun_ajar="", hari=datetime(2020,8,26,20,00,00), kelas = "TI17F", ruang = "A.409", makul_id = 30, dosen_id = 29)
 jc38 = Jadwal(tahun_ajar="", hari=datetime(2020,8,24,20,00,00), kelas = "TI17F", ruang = "D.308", makul_id = 31, dosen_id = 30)
 jc39 = Jadwal(tahun_ajar="", hari=datetime(2020,8,25,18,00,00), kelas = "TI17F", ruang = "A.310", makul_id = 32, dosen_id = 31)
-jc40 = Jadwal(tahun_ajar="", hari=datetime(2020,8,28,20,00,00), kelas = "TI17F", ruang = "Lab", makul_id = 33, dosen_id = 31)
+jc40 = Jadwal(tahun_ajar="", hari=datetime(2020,8,28,20,00,00), kelas = "TI17F", ruang = "Lab", makul_id = 32, dosen_id = 31)
 jc41 = Jadwal(tahun_ajar="", hari=datetime(2020,8,28,18,00,00), kelas = "TI17F", ruang = "A.310", makul_id = 34, dosen_id = 32)
 jc42 = Jadwal(tahun_ajar="", hari=datetime(2020,8,24,16,00,00), kelas = "TI17F", ruang = "A.409", makul_id = 35, dosen_id = 33)
 jc43 = Jadwal(tahun_ajar="", hari=datetime(2020,8,25,10,00,00), kelas = "TI17G", ruang = "A.408", makul_id = 29, dosen_id = 28)
@@ -534,6 +537,45 @@ jc56 = Jadwal(tahun_ajar="", hari=datetime(2020,8,24,18,00,00), kelas = "TI17H",
 db.session.add_all([jc1,jc2,jc3,jc4,jc5,jc6,jc7,jc8,jc9,jc10,jc11,jc12,jc13,jc14,jc15,jc16,jc17,jc18,jc19,jc20,jc21,jc22,jc23,jc24,jc25,jc26,jc27,jc28,jc29,jc30,jc31,jc32,jc33,jc34,jc35,jc36,jc37,jc38,jc39,jc40,jc41,jc42,jc43,jc44,jc45,jc46,jc47,jc48,jc49,jc50,jc51,jc52,jc53,jc54,jc55,jc56])
 
 db.session.commit()
+
+TI18A = Kelas(nama_kelas="TI18A", semester_active=5)
+TI18B = Kelas(nama_kelas="TI18B", semester_active=5)
+TI18C = Kelas(nama_kelas="TI18C", semester_active=5)
+TI18D = Kelas(nama_kelas="TI18D", semester_active=5)
+TI18E = Kelas(nama_kelas="TI18E", semester_active=5)
+TI18F = Kelas(nama_kelas="TI18F", semester_active=5)
+TI18G = Kelas(nama_kelas="TI18G", semester_active=5)
+TI18H = Kelas(nama_kelas="TI18H", semester_active=5)
+TI18I = Kelas(nama_kelas="TI18I", semester_active=5)
+TI19A = Kelas(nama_kelas="TI19A", semester_active=3)
+TI19B = Kelas(nama_kelas="TI19B", semester_active=3)
+TI19C = Kelas(nama_kelas="TI19C", semester_active=3)
+TI19D = Kelas(nama_kelas="TI19D", semester_active=3)
+TI19E = Kelas(nama_kelas="TI19E", semester_active=3)
+TI19F = Kelas(nama_kelas="TI19F", semester_active=3)
+TI19G = Kelas(nama_kelas="TI19G", semester_active=3)
+TI19H = Kelas(nama_kelas="TI19H", semester_active=3)
+TI19I = Kelas(nama_kelas="TI19I", semester_active=3)
+TI20A = Kelas(nama_kelas="TI20A", semester_active=1)
+TI20B = Kelas(nama_kelas="TI20B", semester_active=1)
+TI20C = Kelas(nama_kelas="TI20C", semester_active=1)
+TI20D = Kelas(nama_kelas="TI20D", semester_active=1)
+TI20E = Kelas(nama_kelas="TI20E", semester_active=1)
+TI20F = Kelas(nama_kelas="TI20F", semester_active=1)
+TI20G = Kelas(nama_kelas="TI20G", semester_active=1)
+TI20H = Kelas(nama_kelas="TI20H", semester_active=1)
+TI20I = Kelas(nama_kelas="TI20I", semester_active=1)
+TI17A = Kelas(nama_kelas="TI17A", semester_active=7)
+TI17B = Kelas(nama_kelas="TI17B", semester_active=7)
+TI17C = Kelas(nama_kelas="TI17C", semester_active=7)
+TI17D = Kelas(nama_kelas="TI17D", semester_active=7)
+TI17E = Kelas(nama_kelas="TI17E", semester_active=7)
+TI17F = Kelas(nama_kelas="TI17F", semester_active=7)
+TI17G = Kelas(nama_kelas="TI17G", semester_active=7)
+TI17H = Kelas(nama_kelas="TI17H", semester_active=7)
+db.session.add_all([TI18A, TI18B, TI18C,TI18D,TI18E,TI18F,TI18G,TI18H,TI18I,TI19A,TI19B,TI19C,TI19D,TI19E,TI19F,TI19G,TI19H,TI19I,TI20A,TI20B,TI20C,TI20D,TI20E,TI20F,TI20G,TI20H,TI20I,TI17A,TI17B,TI17C,TI17D,TI17E,TI17F,TI17G,TI17H])
+db.session.commit()
+
 
 jadwal1 = db.session.query(Jadwal).join(Dosen).join(Makul).filter(Makul.semester==5).filter(Dosen.dosen_id==1).all()
 print (jadwal1)
